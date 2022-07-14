@@ -1,0 +1,173 @@
+<h1 id="backend-assignment">Backend-assignment</h1>
+<p>True Value Access - Backend Assignment REST APIs using Python Django rest framework and PSQL database for managing
+  the user’s data.</p>
+<p>This API have following functionalities:</p>
+<p>list users (/api/users GET) search for a user by name sort list by field name pagination of users list create new
+  user (/api/users - POST) get detail of a user (/api/users/<id> - GET) update details of a user (/api/users/<id> - PUT)
+      delete a user (/api/users/<id> - DELETE)</p>
+<p>How to setup and run this project:- first install Django, Django rest framework, python decouple and psycopg2 or run
+  requirement.txt. create .env file configure secret key, debug, Database name, user,password and host.</p>
+<h2 id="task-overview"><strong>Task Overview</strong></h2>
+<p>User have the following attributes:- &gt;&gt;&gt;&gt;&gt;&gt;&gt; user_management</p>
+<pre><code>ID
+First Name
+Last Name
+Company Name
+Age
+City
+State
+Zip
+Email
+Web</code></pre>
+<p>Application have the following endpoints:</p>
+<ul>
+  <li>
+    <p><code>/api/users - GET</code> - To list the users</p>
+    <ul>
+      <li>
+        <p>Response with HTTP status code 200 on success</p>
+        <div class="sourceCode" id="cb2">
+          <pre class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="fu">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="dt">&quot;links&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>    <span class="dt">&quot;next&quot;</span><span class="fu">:</span> <span class="st">&quot;http://127.0.0.1:8000/api/users?page=2&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="fu">},</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a><span class="dt">&quot;results&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>    <span class="fu">{</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>        <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">4</span><span class="fu">,</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a>        <span class="dt">&quot;first_name&quot;</span><span class="fu">:</span> <span class="st">&quot;kans&quot;</span><span class="fu">,</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a>        <span class="dt">&quot;last_name&quot;</span><span class="fu">:</span> <span class="st">&quot;hjkkj&quot;</span><span class="fu">,</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a>        <span class="dt">&quot;email&quot;</span><span class="fu">:</span> <span class="st">&quot;kans@gmail.com&quot;</span><span class="fu">,</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a>        <span class="dt">&quot;age&quot;</span><span class="fu">:</span> <span class="dv">29</span><span class="fu">,</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a>        <span class="dt">&quot;company_name&quot;</span><span class="fu">:</span> <span class="st">&quot;company_name&quot;</span><span class="fu">,</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a>        <span class="dt">&quot;city&quot;</span><span class="fu">:</span> <span class="st">&quot;malappuram&quot;</span><span class="fu">,</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a>        <span class="dt">&quot;state&quot;</span><span class="fu">:</span> <span class="st">&quot;Kerala&quot;</span><span class="fu">,</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a>        <span class="dt">&quot;web&quot;</span><span class="fu">:</span> <span class="st">&quot;https://karshinas-kans.com/&quot;</span><span class="fu">,</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a>        <span class="dt">&quot;zip&quot;</span><span class="fu">:</span> <span class="dv">676776</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true"></a>    <span class="fu">{</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true"></a>        <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">5</span><span class="fu">,</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true"></a>        <span class="dt">&quot;first_name&quot;</span><span class="fu">:</span> <span class="st">&quot;akkkik&quot;</span><span class="fu">,</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true"></a>        <span class="dt">&quot;last_name&quot;</span><span class="fu">:</span> <span class="st">&quot;kkkak&quot;</span><span class="fu">,</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true"></a>        <span class="dt">&quot;email&quot;</span><span class="fu">:</span> <span class="st">&quot;akkkik@gmail.com&quot;</span><span class="fu">,</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true"></a>        <span class="dt">&quot;age&quot;</span><span class="fu">:</span> <span class="dv">46</span><span class="fu">,</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true"></a>        <span class="dt">&quot;company_name&quot;</span><span class="fu">:</span> <span class="st">&quot;company_ame&quot;</span><span class="fu">,</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true"></a>        <span class="dt">&quot;city&quot;</span><span class="fu">:</span> <span class="st">&quot;malappuram&quot;</span><span class="fu">,</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true"></a>        <span class="dt">&quot;state&quot;</span><span class="fu">:</span> <span class="st">&quot;Kerala&quot;</span><span class="fu">,</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true"></a>        <span class="dt">&quot;web&quot;</span><span class="fu">:</span> <span class="st">&quot;https://akkiki.app/&quot;</span><span class="fu">,</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true"></a>        <span class="dt">&quot;zip&quot;</span><span class="fu">:</span> <span class="dv">679573</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true"></a>    <span class="fu">}</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true"></a><span class="ot">]</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true"></a><span class="fu">}</span></span></code></pre>
+        </div>
+      </li>
+      <li>
+        <p>page - a number for pagination</p>
+      </li>
+      <li>
+        <p>limit - no. of items to be returned, default limit is 5</p>
+      </li>
+      <li>
+        <p>name - search user by name as a substring in First Name or Last Name (Note, use substring matching
+          algorithm/pattern to match the name). with case-insensitive.</p>
+      </li>
+      <li>
+        <p>Sort - name of attribute, the items to be sorted. By default it returns items in ascending order if this
+          parameter exist, and if the value of parameter is prefixed with ‘-’ character, then it return items in
+          descending order</p>
+      </li>
+    </ul>
+    <p>Sample query endpoint:- <code>/api/users?page=1&amp;limit=10&amp;search=James&amp;sort=-age</code> This endpoint
+      return list of 10 users whose first name or last name contains substring given name and sort the users by age in
+      descending order of page 1.</p>
+  </li>
+  <li>
+    <p><code>/api/users - POST</code> - To create a new user</p>
+    <ul>
+      <li>
+        <p>Request Payload is like in json format :- &gt;&gt;&gt;&gt;&gt;&gt;&gt; user_management</p>
+        <div class="sourceCode" id="cb3">
+          <pre class="sourceCode json"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="fu">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>  <span class="dt">&quot;first_name&quot;</span><span class="fu">:</span> <span class="st">&quot;Josephine&quot;</span><span class="fu">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>  <span class="dt">&quot;last_name&quot;</span><span class="fu">:</span> <span class="st">&quot;Darakjy&quot;</span><span class="fu">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>  <span class="dt">&quot;company_name&quot;</span><span class="fu">:</span> <span class="st">&quot;Chanay, Jeffrey A Esq&quot;</span><span class="fu">,</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>  <span class="dt">&quot;city&quot;</span><span class="fu">:</span> <span class="st">&quot;Brighton&quot;</span><span class="fu">,</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a>  <span class="dt">&quot;state&quot;</span><span class="fu">:</span> <span class="st">&quot;MI&quot;</span><span class="fu">,</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a>  <span class="dt">&quot;zip&quot;</span><span class="fu">:</span> <span class="dv">48116</span><span class="fu">,</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a>  <span class="dt">&quot;email&quot;</span><span class="fu">:</span> <span class="st">&quot;josephine_darakjy@darakjy.org&quot;</span><span class="fu">,</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a>  <span class="dt">&quot;web&quot;</span><span class="fu">:</span> <span class="st">&quot;http://www.chanayjeffreyaesq.com&quot;</span><span class="fu">,</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a>  <span class="dt">&quot;age&quot;</span><span class="fu">:</span> <span class="dv">48</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a><span class="fu">}</span></span></code></pre>
+        </div>
+      </li>
+      <li>
+        <p>Response with HTTP status code 201 on success</p>
+        <div class="sourceCode" id="cb4">
+          <pre
+            class="sourceCode json"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="fu">{}</span></span></code></pre>
+        </div>
+      </li>
+      <li>
+        <p>This endpoint will create a new user inside the database</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><code>/api/users/{id} - GET</code> - To get the details of a user</p>
+    <ol type="1">
+      <li>Here {id} will be the id of the user in path parameter</li>
+      <li>Response with HTTP status code 200 on success</li>
+    </ol>
+    <div class="sourceCode" id="cb5">
+      <pre class="sourceCode json"><code class="sourceCode json"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="fu">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>  <span class="dt">&quot;first_name&quot;</span><span class="fu">:</span> <span class="st">&quot;James&quot;</span><span class="fu">,</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>  <span class="dt">&quot;last_name&quot;</span><span class="fu">:</span> <span class="st">&quot;Butt&quot;</span><span class="fu">,</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>  <span class="dt">&quot;company_name&quot;</span><span class="fu">:</span> <span class="st">&quot;Benton, John B Jr&quot;</span><span class="fu">,</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a>  <span class="dt">&quot;city&quot;</span><span class="fu">:</span> <span class="st">&quot;New Orleans&quot;</span><span class="fu">,</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a>  <span class="dt">&quot;state&quot;</span><span class="fu">:</span> <span class="st">&quot;LA&quot;</span><span class="fu">,</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true"></a>  <span class="dt">&quot;zip&quot;</span><span class="fu">:</span> <span class="dv">70116</span><span class="fu">,</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true"></a>  <span class="dt">&quot;email&quot;</span><span class="fu">:</span> <span class="st">&quot;jbutt@gmail.com&quot;</span><span class="fu">,</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true"></a>  <span class="dt">&quot;web&quot;</span><span class="fu">:</span> <span class="st">&quot;http://www.bentonjohnbjr.com&quot;</span><span class="fu">,</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true"></a>  <span class="dt">&quot;age&quot;</span><span class="fu">:</span> <span class="dv">70</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true"></a><span class="fu">}</span></span></code></pre>
+    </div>
+    <p>Sample query looks like:- <code>/api/users/1 GET</code></p>
+  </li>
+  <li>
+    <p><code>/api/users/{id} PUT</code> - To update the details of a user</p>
+    <ul>
+      <li>Here {id} will be the id of the user in path parameter</li>
+    </ul>
+  </li>
+</ul>
+<p>======= - Request Payload is like in json format for updating first name, last name and age:-</p>
+<pre><code>```json
+{
+  &quot;first_name&quot;: &quot;Josephine&quot;,
+  &quot;last_name&quot;: &quot;Darakjy&quot;,
+  &quot;age&quot;: 48
+}
+```</code></pre>
+<ul>
+  <li>
+    <p>Response with HTTP status code 200 on success {}</p>
+  </li>
+  <li>
+    <p><code>/api/users/{id} DELETE</code> - To delete the user</p>
+    <ul>
+      <li>
+        <p>Here {id} will be the id of the user in path parameter</p>
+      </li>
+      <li>
+        <p>Response with HTTP status code 200 on success</p>
+        <div class="sourceCode" id="cb7">
+          <pre
+            class="sourceCode json"><code class="sourceCode json"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="fu">{}</span></span></code></pre>
+        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+<h1>Thank you</h1>
